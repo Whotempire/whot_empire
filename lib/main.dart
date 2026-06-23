@@ -125,6 +125,9 @@ class MenuButton extends StatelessWidget {
   }
 }
 
+int pendingPick = 0;
+bool holdOnActive = false;
+
 class OfflineGamePage extends StatefulWidget {
   const OfflineGamePage({super.key});
 
@@ -140,6 +143,8 @@ class _OfflineGamePageState extends State<OfflineGamePage> {
 
   bool playerTurn = true;
   String gameStatus = 'Your Turn';
+  
+String? requestedShape;
 
   @override
   void initState() {
@@ -162,6 +167,7 @@ class _OfflineGamePageState extends State<OfflineGamePage> {
 
     playerTurn = true;
     gameStatus = 'Your Turn';
+    requestedShape = null;
 
     setState(() {});
   }
@@ -184,21 +190,28 @@ class _OfflineGamePageState extends State<OfflineGamePage> {
   }
 
   bool canPlay(WhotCard card) {
-    final topCard = discardPile.last;
+  final topCard = discardPile.last;
 
-    return card.shape == topCard.shape ||
-        card.number == topCard.number ||
-        card.number == 20;
+  if (card.number == 20) {
+    return true;
   }
 
-  void drawCards(List<WhotCard> hand, int amount) {
-    for (int i = 0; i < amount; i++) {
-      if (deck.isNotEmpty) {
-        hand.add(deck.first);
-        deck.removeAt(0);
-      }
+  if (requestedShape != null) {
+    return card.shape == requestedShape;
+  }
+
+  return card.shape == topCard.shape || card.number == topCard.number;
+}
+
+void drawCards(List<WhotCard> hand, int amount) {
+  for (int i = 0; i < amount; i++) {
+    if (deck.isNotEmpty) {
+      hand.add(deck.first);
+      deck.removeAt(0);
     }
   }
+}
+
 
   void playCard(WhotCard card) {
     if (!playerTurn) return;
