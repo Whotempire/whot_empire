@@ -213,7 +213,7 @@ void drawCards(List<WhotCard> hand, int amount) {
 }
 
 
-  void playCard(WhotCard card) {
+  Future<void> playCard(WhotCard card) async {
     if (!playerTurn) return;
 
     if (!canPlay(card)) {
@@ -227,6 +227,11 @@ void drawCards(List<WhotCard> hand, int amount) {
       playerCards.remove(card);
       discardPile.add(card);
     });
+
+if (card.number == 20) {
+  await chooseRequestedShape();
+  return;
+}
 
     if (playerCards.isEmpty) {
       setState(() {
@@ -400,6 +405,80 @@ if (cardToPlay.number == 14) {
       });
     });
   }
+
+Future<void> chooseRequestedShape() async {
+  setState(() {
+    gameStatus = 'WHOT played - choose a shape';
+  });
+
+  String selectedShape = 'Circle';
+
+  await showDialog(
+    context: context,
+    barrierDismissible: false,
+    builder: (context) {
+      return AlertDialog(
+        title: const Text('Choose Shape'),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ElevatedButton(
+              onPressed: () {
+                selectedShape = 'Circle';
+                Navigator.pop(context);
+              },
+              child: const Text('Circle'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                selectedShape = 'Triangle';
+                Navigator.pop(context);
+              },
+              child: const Text('Triangle'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                selectedShape = 'Cross';
+                Navigator.pop(context);
+              },
+              child: const Text('Cross'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                selectedShape = 'Square';
+                Navigator.pop(context);
+              },
+              child: const Text('Square'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                selectedShape = 'Star';
+                Navigator.pop(context);
+              },
+              child: const Text('Star'),
+            ),
+          ],
+        ),
+      );
+    },
+  );
+
+  setState(() {
+    discardPile.add(
+      WhotCard(
+        shape: selectedShape,
+        number: 20,
+      ),
+    );
+
+    playerTurn = false;
+    gameStatus = 'Computer Thinking...';
+  });
+
+  Future.delayed(const Duration(seconds: 1), () {
+    computerPlay();
+  });
+}
 
   void drawCard() {
     if (!playerTurn) return;
