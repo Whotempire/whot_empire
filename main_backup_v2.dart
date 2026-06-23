@@ -240,10 +240,60 @@ Text(
 
 const SizedBox(height: 10),
           const SizedBox(height: 20),
-          Text(
-            'Computer Cards: ${computerCards.length}',
-            style: const TextStyle(color: Colors.white, fontSize: 20),
-          ),
+          Column(
+  children: [
+    const CircleAvatar(
+      radius: 30,
+      backgroundColor: Colors.black,
+      child: Icon(
+        Icons.person,
+        color: Colors.white,
+        size: 32,
+      ),
+    ),
+    const SizedBox(height: 6),
+    const Text(
+      'Computer',
+      style: TextStyle(
+        color: Colors.white,
+        fontSize: 18,
+        fontWeight: FontWeight.bold,
+      ),
+    ),
+    Text(
+      '${computerCards.length} Cards',
+      style: const TextStyle(
+        color: Colors.white70,
+        fontSize: 14,
+      ),
+    ),
+  ],
+),
+
+
+const SizedBox(height: 10),
+SizedBox(
+  height: 60,
+  child: Row(
+    mainAxisAlignment: MainAxisAlignment.center,
+    children: List.generate(
+      computerCards.length,
+      (index) => Container(
+        width: 28,
+        height: 40,
+        margin: const EdgeInsets.symmetric(horizontal: 2),
+        decoration: BoxDecoration(
+          color: Colors.red.shade900,
+          borderRadius: BorderRadius.circular(6),
+          border: Border.all(color: Colors.white, width: 1),
+        ),
+      ),
+    ),
+  ),
+),
+
+
+
           const Spacer(),
           const Text(
             'Top Card',

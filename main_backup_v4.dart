@@ -44,7 +44,7 @@ class HomePage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Icon(Icons.style, size: 110, color: Colors.white),
-            const SizedBox(height: 8),
+            const SizedBox(height: 20),
             const Text(
               'WHOT EMPIRE',
               style: TextStyle(
@@ -432,8 +432,6 @@ if (cardToPlay.number == 14) {
             ),
           ),
           const SizedBox(height: 10),
-         
-         
           Column(
   children: [
     const CircleAvatar(
@@ -463,9 +461,7 @@ if (cardToPlay.number == 14) {
     ),
   ],
 ),
-
-
-          const SizedBox(height: 10),
+          const Spacer(),
           const Text(
             'Top Card',
             style: TextStyle(color: Colors.white, fontSize: 18),
@@ -476,14 +472,14 @@ if (cardToPlay.number == 14) {
             onPressed: playerTurn ? drawCard : null,
             child: const Text('Draw Card'),
           ),
-          const SizedBox(height: 20),
+          const Spacer(),
           Text(
             'Your Cards: ${playerCards.length}',
             style: const TextStyle(color: Colors.white, fontSize: 20),
           ),
-          const SizedBox(height: 4),
+          const SizedBox(height: 12),
           SizedBox(
-            height: 115,
+            height: 125,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
               itemCount: playerCards.length,
@@ -497,7 +493,7 @@ if (cardToPlay.number == 14) {
               },
             ),
           ),
-          const SizedBox(height: 2),
+          const SizedBox(height: 20),
         ],
       ),
     );
@@ -531,8 +527,8 @@ class WhotCardWidget extends StatelessWidget {
     final isWhot = card.number == 20;
 
     return Container(
-      width: 68,
-      height: 95,
+      width: 82,
+      height: 115,
       margin: const EdgeInsets.symmetric(horizontal: 6, vertical: 6),
       decoration: BoxDecoration(
         color: isWhot ? Colors.red.shade700 : Colors.white,
@@ -551,10 +547,10 @@ class WhotCardWidget extends StatelessWidget {
         children: [
           Icon(
             isWhot ? Icons.style : getShapeIcon(),
-            size: 24,
+            size: 34,
             color: isWhot ? Colors.white : Colors.black,
           ),
-          const SizedBox(height: 2),
+          const SizedBox(height: 8),
           Text(
             isWhot ? 'WHOT' : card.shape,
             style: TextStyle(
@@ -566,7 +562,7 @@ class WhotCardWidget extends StatelessWidget {
           Text(
             '${card.number}',
             style: TextStyle(
-              fontSize: 18,
+              fontSize: 24,
               fontWeight: FontWeight.bold,
               color: isWhot ? Colors.white : Colors.black,
             ),
