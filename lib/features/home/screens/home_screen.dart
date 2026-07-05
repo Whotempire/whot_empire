@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:whot_empire/features/menu/screens/game_menu_screen.dart';
+import 'package:whot_empire/core/theme/app_colors.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
