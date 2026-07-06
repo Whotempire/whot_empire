@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:whot_empire/features/menu/screens/game_menu_screen.dart';
-import 'package:whot_empire/core/theme/app_colors.dart';
+import 'package:whot_empire/features/profile/screens/profile_screen.dart';
+import 'package:whot_empire/widgets/common/empire_button.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -77,12 +78,12 @@ class HomePage extends StatelessWidget {
 
               const Spacer(),
 
-              _LobbyButton(
-                title: 'Classic Whot',
-                subtitle: 'Fast Nigerian card battle',
-                icon: Icons.style,
-                onTap: _openGameMenuStatic,
-              ),
+              EmpireButton(
+  title: 'Classic Whot',
+  icon: Icons.style,
+  onPressed: () => _openGameMenu(context),
+),
+            
 
               const SizedBox(height: 16),
 
@@ -95,12 +96,27 @@ class HomePage extends StatelessWidget {
               const SizedBox(height: 16),
 
               const _LockedLobbyButton(
-                title: 'Tournaments',
-                subtitle: 'Coming soon',
-                icon: Icons.emoji_events,
-              ),
+  title: 'Tournaments',
+  subtitle: 'Coming soon',
+  icon: Icons.emoji_events,
+),
 
-              const Spacer(),
+const SizedBox(height: 16),
+
+EmpireButton(
+  title: 'Profile',
+  icon: Icons.person,
+  onPressed: () {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const ProfileScreen(),
+      ),
+    );
+  },
+),
+
+const Spacer(),
 
               const Text(
                 'Welcome, King 👑',

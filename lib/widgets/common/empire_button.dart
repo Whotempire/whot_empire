@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:whot_empire/core/theme/app_colors.dart';
 
 class EmpireButton extends StatelessWidget {
   final String title;
@@ -17,19 +16,11 @@ class EmpireButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity,
-      height: 62,
+      height: 60,
       child: ElevatedButton.icon(
         onPressed: onPressed,
         icon: Icon(icon),
         label: Text(title),
-        style: ElevatedButton.styleFrom(
-          backgroundColor: AppColors.royalGold,
-          foregroundColor: AppColors.royalBlack,
-          elevation: 8,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(18),
-          ),
-        ),
       ),
     );
   }

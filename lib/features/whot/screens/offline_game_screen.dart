@@ -31,11 +31,11 @@ class _OfflineGamePageState extends State<OfflineGamePage> {
     deck = buildDeck();
     deck.shuffle(Random());
 
-    playerCards = deck.take(6).toList();
-    deck.removeRange(0, 6);
+    playerCards = deck.take(5).toList();
+deck.removeRange(0, 5);
 
-    computerCards = deck.take(6).toList();
-    deck.removeRange(0, 6);
+computerCards = deck.take(5).toList();
+deck.removeRange(0, 5);
 
     discardPile = [deck.first];
     deck.removeAt(0);
