@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 
 import '../models/whot_card.dart';
 import '../../../widgets/whot_card_widget.dart';
+import '../engine/deck_generator.dart';
+import 'package:whot_empire/widgets/game/empire_whot_card.dart';
 
 class OfflineGamePage extends StatefulWidget {
   const OfflineGamePage({super.key});
@@ -48,21 +50,8 @@ deck.removeRange(0, 5);
   }
 
   List<WhotCard> buildDeck() {
-    final cards = <WhotCard>[];
-    final shapes = ['Circle', 'Triangle', 'Cross', 'Square', 'Star'];
-    final numbers = [1, 2, 3, 4, 5, 7, 8, 10, 11, 12, 13, 14];
-
-    for (final shape in shapes) {
-      for (final number in numbers) {
-        cards.add(WhotCard(shape: shape, number: number));
-      }
-    }
-
-    cards.add(WhotCard(shape: 'Whot', number: 20));
-    cards.add(WhotCard(shape: 'Whot', number: 20));
-
-    return cards;
-  }
+  return DeckGenerator.shuffledDeck();
+}
 
   bool canPlay(WhotCard card) {
     final topCard = discardPile.last;
@@ -388,12 +377,12 @@ deck.removeRange(0, 5);
             ],
           ),
           const SizedBox(height: 10),
-          const Text(
+                    const Text(
             'Top Card',
             style: TextStyle(color: Colors.white, fontSize: 18),
           ),
-          WhotCardWidget(card: topCard),
-          const SizedBox(height: 20),
+          EmpireWhotCard(card: topCard),
+         const SizedBox(height: 20),
           ElevatedButton(
             onPressed: playerTurn ? drawCard : null,
             child: const Text('Draw Card'),
@@ -414,8 +403,7 @@ deck.removeRange(0, 5);
 
                 return GestureDetector(
                   onTap: () => playCard(card),
-                  child: WhotCardWidget(card: card),
-                );
+child: EmpireWhotCard(card: card),                );
               },
             ),
           ),
