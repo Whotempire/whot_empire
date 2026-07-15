@@ -5,6 +5,11 @@ import '../models/whot_card.dart';
 import '../../../widgets/whot_card_widget.dart';
 import '../engine/deck_generator.dart';
 import 'package:whot_empire/widgets/game/empire_whot_card.dart';
+import 'package:whot_empire/core/design_system/colors.dart';
+import 'package:whot_empire/widgets/common/lc_section_title.dart';
+import 'package:whot_empire/widgets/common/lc_button.dart';
+import 'package:whot_empire/widgets/common/lc_avatar.dart';
+
 
 class OfflineGamePage extends StatefulWidget {
   const OfflineGamePage({super.key});
@@ -307,11 +312,11 @@ deck.removeRange(0, 5);
   }
 
   Widget _shapeButton(String shape, void Function(String) onSelected) {
-    return ElevatedButton(
-      onPressed: () => onSelected(shape),
-      child: Text(shape),
-    );
-  }
+  return ElevatedButton(
+    onPressed: () => onSelected(shape),
+    child: Text(shape),
+  );
+}
 
   void drawCard() {
     if (!playerTurn || deck.isEmpty) return;
@@ -328,73 +333,109 @@ deck.removeRange(0, 5);
 
   @override
   Widget build(BuildContext context) {
-    final topCard = discardPile.last;
+  final topCard = discardPile.last;
 
-    return Scaffold(
-      backgroundColor: Colors.green.shade700,
-      appBar: AppBar(
-        title: const Text('Offline Match'),
-        backgroundColor: Colors.green.shade900,
-        actions: [
-          IconButton(
-            onPressed: startNewGame,
-            icon: const Icon(Icons.refresh),
-          ),
-        ],
-      ),
-      body: Column(
+  return Scaffold(
+    backgroundColor: Colors.green.shade700,
+    appBar: AppBar(
+      title: const Text('Offline Match'),
+      backgroundColor: Colors.green.shade900,
+      actions: [
+        IconButton(
+          onPressed: startNewGame,
+          icon: const Icon(Icons.refresh),
+        ),
+      ],
+    ),
+    body: SafeArea(
+      child: Column(
         children: [
-          const SizedBox(height: 10),
+          const SizedBox(height: 6),
           Text(
             gameStatus,
+            textAlign: TextAlign.center,
             style: const TextStyle(
               color: Colors.yellow,
-              fontSize: 22,
+              fontSize: 20,
               fontWeight: FontWeight.bold,
             ),
           ),
-          const SizedBox(height: 10),
-          Column(
+          const SizedBox(height: 6),
+          const CircleAvatar(
+            radius: 24,
+            backgroundColor: Colors.black,
+            child: Icon(Icons.person, color: Colors.white, size: 28),
+          ),
+          const SizedBox(height: 4),
+          const Text(
+            'Computer',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          Text(
+            '${computerCards.length} Cards',
+            style: const TextStyle(color: Colors.white70, fontSize: 13),
+          ),
+          const SizedBox(height: 6),
+          const Text(
+            'Battle Table',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          const SizedBox(height: 6),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const CircleAvatar(
-                radius: 30,
-                backgroundColor: Colors.black,
-                child: Icon(Icons.person, color: Colors.white, size: 32),
+              Column(
+                children: [
+                  const Text('Top Card', style: TextStyle(color: Colors.white70)),
+                  const SizedBox(height: 4),
+                  WhotCardWidget(card: topCard),
+                ],
               ),
-              const SizedBox(height: 6),
-              const Text(
-                'Computer',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              Text(
-                '${computerCards.length} Cards',
-                style: const TextStyle(color: Colors.white70, fontSize: 14),
+              const SizedBox(width: 32),
+              Column(
+                children: [
+                  const Text('Draw Deck', style: TextStyle(color: Colors.white70)),
+                  const SizedBox(height: 4),
+                  GestureDetector(
+                    onTap: playerTurn ? drawCard : null,
+                    child: Container(
+                      width: 70,
+                      height: 100,
+                      decoration: BoxDecoration(
+                        color: Colors.black87,
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(color: Colors.amber),
+                      ),
+                      child: const Center(
+                        child: Icon(Icons.style, color: Colors.amber),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
-          const SizedBox(height: 10),
-                    const Text(
-            'Top Card',
-            style: TextStyle(color: Colors.white, fontSize: 18),
-          ),
-          EmpireWhotCard(card: topCard),
-         const SizedBox(height: 20),
+          const SizedBox(height: 6),
           ElevatedButton(
             onPressed: playerTurn ? drawCard : null,
             child: const Text('Draw Card'),
           ),
-          const SizedBox(height: 20),
+          const SizedBox(height: 6),
           Text(
             'Your Cards: ${playerCards.length}',
-            style: const TextStyle(color: Colors.white, fontSize: 20),
+            style: const TextStyle(color: Colors.white, fontSize: 18),
           ),
           const SizedBox(height: 4),
           SizedBox(
-            height: 115,
+            height: 100,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
               itemCount: playerCards.length,
@@ -403,12 +444,14 @@ deck.removeRange(0, 5);
 
                 return GestureDetector(
                   onTap: () => playCard(card),
-child: EmpireWhotCard(card: card),                );
+                  child: WhotCardWidget(card: card),
+                );
               },
             ),
           ),
         ],
       ),
-    );
-  }
+    ),
+  );
+}
 }

@@ -14,9 +14,9 @@ class ProfileScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Royal Profile'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(24),
-        child: Column(
+      body: SingleChildScrollView(
+  padding: const EdgeInsets.all(24),
+  child: Column(
           children: [
             const Icon(
               Icons.account_balance,
@@ -82,7 +82,7 @@ class _ProfileStat extends StatelessWidget {
             title,
             style: const TextStyle(color: Colors.white70, fontSize: 16),
           ),
-          const Spacer(),
+          const SizedBox(height: 24),
           Text(
             value,
             style: const TextStyle(
